@@ -93,14 +93,17 @@ main{width:min(1180px,calc(100% - 40px));margin:0 auto}
 .event-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start}
 .event{background:var(--surface);border:1px solid var(--line);display:flex;flex-direction:column;overflow:hidden;transition:border-color .18s ease,transform .18s ease}
 .event:hover{border-color:var(--ink);transform:translateY(-2px)}
-.event-photo{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--surface2)}
+.event-photo{position:relative;aspect-ratio:16/13;overflow:hidden;background:var(--surface2)}
 .event-photo img{width:100%;height:100%;object-fit:cover;display:block}
-.date-badge{position:absolute;left:0;top:0;bottom:0;z-index:2;width:128px;display:flex;flex-direction:column;padding:14px 13px 13px;background:rgba(16,28,20,.95);color:#fff;box-shadow:6px 0 20px rgba(10,20,14,.35)}
-.date-badge small{display:block;font-weight:700;font-size:.8rem;text-transform:uppercase;letter-spacing:.09em;line-height:1.3;color:#f0d48a}
-.badge-day{display:block;margin-top:8px;font-weight:800;font-size:3.2rem;line-height:.95;letter-spacing:.01em}
-.badge-day.range{font-size:2.1rem;line-height:1}
-.badge-day.wide{font-size:1.3rem;line-height:1.2}
-.date-badge .badge-time{display:block;margin-top:auto;padding-top:10px;font-size:1.14rem;font-weight:800;letter-spacing:.01em;line-height:1.25;color:#fff}
+.date-badge{position:absolute;left:0;top:0;bottom:0;z-index:2;width:228px;display:flex;flex-direction:column;padding:16px 16px 15px;background:rgba(16,28,20,.95);color:#fff;box-shadow:6px 0 20px rgba(10,20,14,.35);overflow:hidden;font-size:2rem;font-weight:800;line-height:1.08}
+.date-badge small{display:block;font-weight:700;font-size:1.42rem;text-transform:uppercase;letter-spacing:.06em;line-height:1.22;color:#f0d48a}
+.badge-day{display:block;margin-top:10px;font-weight:800;font-size:6.6rem;line-height:.92;letter-spacing:.01em}
+.badge-day.range{font-size:4.1rem;line-height:.98}
+.badge-day.wide{font-size:2.9rem;line-height:1.05}
+.badge-day .badge-line{display:block}
+.date-badge .badge-time{display:block;margin-top:auto;padding-top:10px;font-size:2.8rem;font-weight:800;letter-spacing:.01em;line-height:1.08;color:#fff}
+.date-badge .badge-time.long{font-size:2.25rem;line-height:1.12}
+.date-badge .badge-time.xlong{font-size:1.7rem;line-height:1.12}
 .event-copy{padding:12px 14px 13px;display:flex;flex-direction:column;flex:1}
 .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
 .tag{padding:3px 8px;color:var(--muted);background:var(--surface2);font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
@@ -199,12 +202,14 @@ main{width:min(1180px,calc(100% - 40px));margin:0 auto}
   .filters{display:grid;grid-template-columns:1fr 1fr 1fr}
   .filter{padding:0 6px;font-size:.8rem}
   .event-actions{align-items:stretch}
-  .date-badge{width:112px;padding:12px 11px 11px}
-  .date-badge small{font-size:.74rem}
-  .badge-day{font-size:2.7rem}
-  .badge-day.range{font-size:1.8rem}
-  .badge-day.wide{font-size:1.14rem}
-  .date-badge .badge-time{font-size:1.02rem}
+  .date-badge{width:196px;padding:14px 14px 13px}
+  .date-badge small{font-size:1.26rem}
+  .badge-day{font-size:5.8rem}
+  .badge-day.range{font-size:3.5rem}
+  .badge-day.wide{font-size:2.5rem}
+  .date-badge .badge-time{font-size:2.4rem}
+  .date-badge .badge-time.long{font-size:1.95rem}
+  .date-badge .badge-time.xlong{font-size:1.55rem}
   .event-link,.calendar-menu{flex:1 1 140px}
   .calendar-menu summary{width:100%}
   .calendar-options{left:auto;right:0}
@@ -213,6 +218,16 @@ main{width:min(1180px,calc(100% - 40px));margin:0 auto}
   .source-note{grid-template-columns:1fr}
   .church-band{padding:48px 0 54px}
   .sources{margin-left:-12px;margin-right:-12px;padding:32px 20px}
+}
+@media (min-width:1021px) and (max-width:1180px){
+  .date-badge{width:208px;padding:15px}
+  .date-badge small{font-size:1.3rem}
+  .badge-day{font-size:6.1rem}
+  .badge-day.range{font-size:3.85rem}
+  .badge-day.wide{font-size:2.7rem}
+  .date-badge .badge-time{font-size:2.6rem}
+  .date-badge .badge-time.long{font-size:2.1rem}
+  .date-badge .badge-time.xlong{font-size:1.62rem}
 }
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}.event{transition:none}}
 </style>
@@ -1545,7 +1560,7 @@ main{width:min(1180px,calc(100% - 40px));margin:0 auto}
       var spans=meta?Array.prototype.slice.call(meta.querySelectorAll('span')):[];
       var timeText='';
       for(var i=0;i<spans.length;i++){
-        if(/(am|pm)/i.test(spans[i].textContent)){ timeText=spans[i].textContent.trim(); spans[i].remove(); break; }
+        if(/\d\s*(?:am|pm)\b/i.test(spans[i].textContent)){ timeText=spans[i].textContent.trim(); spans[i].remove(); break; }
       }
       if(!timeText) timeText=timeRange(ev);
       if(!timeText){
@@ -1569,13 +1584,13 @@ main{width:min(1180px,calc(100% - 40px));margin:0 auto}
         var rDay=document.createElement('span'); rDay.className='badge-day';
         if(last.getTime()===sd.getTime()){ rDay.textContent=sd.getDate(); }
         else if(last.getMonth()===sd.getMonth()){ rDay.className+=' range'; rDay.textContent=sd.getDate()+'–'+last.getDate(); }
-        else { rDay.className+=' wide'; rDay.textContent=monShort[sd.getMonth()]+' '+sd.getDate()+' – '+monShort[last.getMonth()]+' '+last.getDate(); }
+        else { rDay.className+=' wide'; var wl1=document.createElement('span'); wl1.className='badge-line'; wl1.textContent=monShort[sd.getMonth()]+' '+sd.getDate(); var wl2=document.createElement('span'); wl2.className='badge-line'; wl2.textContent='– '+monShort[last.getMonth()]+' '+last.getDate(); rDay.appendChild(wl1); rDay.appendChild(wl2); }
         rail.appendChild(rDay);
-        if(timeText){ var bt=document.createElement('span'); bt.className='badge-time'; bt.textContent=timeText; rail.appendChild(bt); }
+        if(timeText){ var bt=document.createElement('span'); bt.className='badge-time'+(timeText.length>22?' xlong':timeText.length>11?' long':''); bt.textContent=timeText; rail.appendChild(bt); }
         if(badge) badge.remove();
         photo.appendChild(rail);
       } else if(badge&&timeText){
-        var bt2=document.createElement('span'); bt2.className='badge-time'; bt2.textContent=timeText; badge.appendChild(bt2);
+        var bt2=document.createElement('span'); bt2.className='badge-time'+(timeText.length>22?' xlong':timeText.length>11?' long':''); bt2.textContent=timeText; badge.appendChild(bt2);
       }
       if(meta){
         Array.prototype.slice.call(meta.querySelectorAll('span')).forEach(function(s){
