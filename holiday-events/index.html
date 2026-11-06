@@ -45,10 +45,41 @@ main{width:min(1180px,calc(100% - 40px));margin:0 auto}
 .watch-head{margin:30px 0 4px;font-family:"DM Serif Display",Georgia,serif;font-size:1.3rem;font-weight:400;color:#fff}
 .watch-note{margin:0 0 16px;color:#c9d4cb;font-size:.92rem;max-width:640px}
 .city-wrap select{max-width:170px}
-.day-head{scroll-margin-top:150px;grid-column:1/-1;display:flex;align-items:baseline;justify-content:space-between;gap:14px;margin:26px 0 2px;padding-bottom:8px;border-bottom:2px solid var(--pine);font-family:"DM Serif Display",Georgia,serif;font-size:1.5rem;font-weight:400;color:var(--ink)}
-.day-head:first-child{margin-top:0}
-.day-head .day-count{font-family:"Source Sans 3",sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--berry);white-space:nowrap}
-.day-head.hidden{display:none}
+#events{display:block}
+.day-group{margin:0 0 14px}
+.day-head{margin:0;scroll-margin-top:150px}
+.day-toggle{width:100%;min-height:58px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:12px 16px;background-color:#15251b;background-repeat:repeat;color:#f3efe4;text-shadow:0 1px 7px rgba(0,0,0,.6);border:1px solid #33503e;border-bottom:3px solid var(--gold);cursor:pointer;text-align:left;touch-action:manipulation}
+.day-toggle:hover{filter:brightness(1.15)}
+.day-group:not(.collapsed) .day-toggle{border-bottom-color:var(--berry);box-shadow:inset 0 0 0 1px var(--gold)}
+.day-pat-0{background-image:linear-gradient(rgba(10,20,14,.68),rgba(10,20,14,.68)),url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNDAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMjQwIDEyMCI+CiAgPHBhdGggZD0iTS01IDggUTYwIDUyIDEyMiAxNiBUMjQ1IDYiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzQ5Njg0ZiIgc3Ryb2tlLXdpZHRoPSIyLjUiLz4KICA8ZyBzdHJva2U9IiM0OTY4NGYiIHN0cm9rZS13aWR0aD0iMiI+CiAgICA8cGF0aCBkPSJNMjggMjR2NyIvPjxwYXRoIGQ9Ik01OCAzNHY3Ii8+PHBhdGggZD0iTTkwIDI5djciLz48cGF0aCBkPSJNMTIyIDE3djciLz48cGF0aCBkPSJNMTUyIDIxdjciLz48cGF0aCBkPSJNMTg0IDI1djciLz48cGF0aCBkPSJNMjE0IDE2djciLz4KICA8L2c+CiAgPGc+CiAgICA8Y2lyY2xlIGN4PSIyOCIgY3k9IjM4IiByPSI2LjUiIGZpbGw9IiNjODQwNWEiLz4KICAgIDxjaXJjbGUgY3g9IjU4IiBjeT0iNDgiIHI9IjYuNSIgZmlsbD0iI2UzYjM0MSIvPgogICAgPGNpcmNsZSBjeD0iOTAiIGN5PSI0MyIgcj0iNi41IiBmaWxsPSIjZWZlNmNmIi8+CiAgICA8Y2lyY2xlIGN4PSIxMjIiIGN5PSIzMSIgcj0iNi41IiBmaWxsPSIjNGQ5ZTZiIi8+CiAgICA8Y2lyY2xlIGN4PSIxNTIiIGN5PSIzNSIgcj0iNi41IiBmaWxsPSIjYzg0MDVhIi8+CiAgICA8Y2lyY2xlIGN4PSIxODQiIGN5PSIzOSIgcj0iNi41IiBmaWxsPSIjZTNiMzQxIi8+CiAgICA8Y2lyY2xlIGN4PSIyMTQiIGN5PSIzMCIgcj0iNi41IiBmaWxsPSIjZWZlNmNmIi8+CiAgPC9nPgogIDxwYXRoIGQ9Ik0tNSA2NiBRNzAgMTA0IDE0MiA3NiBUMjQ1IDYyIiBmaWxsPSJub25lIiBzdHJva2U9IiM0OTY4NGYiIHN0cm9rZS13aWR0aD0iMi41Ii8+CiAgPGcgc3Ryb2tlPSIjNDk2ODRmIiBzdHJva2Utd2lkdGg9IjIiPgogICAgPHBhdGggZD0iTTQyIDg0djciLz48cGF0aCBkPSJNOTYgODh2NyIvPjxwYXRoIGQ9Ik0xNTAgNzd2NyIvPjxwYXRoIGQ9Ik0yMDIgNzB2NyIvPgogIDwvZz4KICA8Zz4KICAgIDxjaXJjbGUgY3g9IjQyIiBjeT0iOTgiIHI9IjYiIGZpbGw9IiNlM2IzNDEiLz4KICAgIDxjaXJjbGUgY3g9Ijk2IiBjeT0iMTAyIiByPSI2IiBmaWxsPSIjNGQ5ZTZiIi8+CiAgICA8Y2lyY2xlIGN4PSIxNTAiIGN5PSI5MSIgcj0iNiIgZmlsbD0iI2VmZTZjZiIvPgogICAgPGNpcmNsZSBjeD0iMjAyIiBjeT0iODQiIHI9IjYiIGZpbGw9IiNjODQwNWEiLz4KICA8L2c+Cjwvc3ZnPgo=)}
+.day-pat-1{background-image:linear-gradient(rgba(10,20,14,.72),rgba(10,20,14,.72)),url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNjAiIGhlaWdodD0iMTYwIiB2aWV3Qm94PSIwIDAgMTYwIDE2MCI+CiAgPGcgc3Ryb2tlPSIjZDdlOWYyIiBzdHJva2Utd2lkdGg9IjIuNCIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBvcGFjaXR5PSIwLjg1Ij4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDM4IDM4KSI+CiAgICAgIDxwYXRoIGQ9Ik0tMTMgMEgxM00tNi41IC0xMS4zIDYuNSAxMS4zTTYuNSAtMTEuMy02LjUgMTEuMyIvPgogICAgICA8cGF0aCBkPSJNLTEzIDBsNCAtM00tMTMgMGw0IDNNMTMgMGwtNCAtM00xMyAwbC00IDMiLz4KICAgIDwvZz4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEyMiA5Nikgc2NhbGUoMS4yNSkiPgogICAgICA8cGF0aCBkPSJNLTEzIDBIMTNNLTYuNSAtMTEuMyA2LjUgMTEuM002LjUgLTExLjMtNi41IDExLjMiLz4KICAgICAgPHBhdGggZD0iTS0xMyAwbDQgLTNNLTEzIDBsNCAzTTEzIDBsLTQgLTNNMTMgMGwtNCAzIi8+CiAgICA8L2c+CiAgICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3NCAxMzQpIHNjYWxlKDAuNykiPgogICAgICA8cGF0aCBkPSJNLTEzIDBIMTNNLTYuNSAtMTEuMyA2LjUgMTEuM002LjUgLTExLjMtNi41IDExLjMiLz4KICAgIDwvZz4KICAgIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE0MiAyNCkgc2NhbGUoMC42KSI+CiAgICAgIDxwYXRoIGQ9Ik0tMTMgMEgxM00tNi41IC0xMS4zIDYuNSAxMS4zTTYuNSAtMTEuMy02LjUgMTEuMyIvPgogICAgPC9nPgogIDwvZz4KICA8ZyBmaWxsPSIjZDdlOWYyIiBvcGFjaXR5PSIwLjciPgogICAgPGNpcmNsZSBjeD0iODYiIGN5PSI1MiIgcj0iMi40Ii8+PGNpcmNsZSBjeD0iMTgiIGN5PSIxMDQiIHI9IjIiLz48Y2lyY2xlIGN4PSIxNDAiIGN5PSIxNDIiIHI9IjIuMiIvPjxjaXJjbGUgY3g9IjU4IiBjeT0iODIiIHI9IjEuOCIvPjxjaXJjbGUgY3g9IjEwNCIgY3k9IjE0MCIgcj0iMS44Ii8+CiAgPC9nPgo8L3N2Zz4K)}
+.day-pat-2{background-image:linear-gradient(rgba(10,20,14,.68),rgba(10,20,14,.68)),url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMDAiIGhlaWdodD0iMTQwIiB2aWV3Qm94PSIwIDAgMjAwIDE0MCI+CiAgPGcgc3Ryb2tlPSIjOGE5YThjIiBzdHJva2Utd2lkdGg9IjIiPgogICAgPHBhdGggZD0iTTMyIDB2MzYiLz48cGF0aCBkPSJNOTIgMHY2NCIvPjxwYXRoIGQ9Ik0xNDggMHYyNiIvPjxwYXRoIGQ9Ik0xODQgMHY3OCIvPgogIDwvZz4KICA8Zz4KICAgIDxyZWN0IHg9IjI3IiB5PSIzNCIgd2lkdGg9IjEwIiBoZWlnaHQ9IjciIGZpbGw9IiNjOWE4NmEiLz4KICAgIDxjaXJjbGUgY3g9IjMyIiBjeT0iNTYiIHI9IjE0IiBmaWxsPSIjYzg0MDVhIi8+CiAgICA8ZWxsaXBzZSBjeD0iMjciIGN5PSI1MCIgcng9IjQuNSIgcnk9IjYiIGZpbGw9IiNmZmZmZmYiIG9wYWNpdHk9IjAuMjgiLz4KICAgIDxyZWN0IHg9Ijg4IiB5PSI2MiIgd2lkdGg9IjgiIGhlaWdodD0iNiIgZmlsbD0iI2M5YTg2YSIvPgogICAgPGNpcmNsZSBjeD0iOTIiIGN5PSI3OSIgcj0iMTAuNSIgZmlsbD0iI2UzYjM0MSIvPgogICAgPGVsbGlwc2UgY3g9Ijg4LjUiIGN5PSI3NCIgcng9IjMuNCIgcnk9IjQuNiIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC4zIi8+CiAgICA8cmVjdCB4PSIxNDMiIHk9IjI0IiB3aWR0aD0iMTAiIGhlaWdodD0iNyIgZmlsbD0iI2M5YTg2YSIvPgogICAgPGNpcmNsZSBjeD0iMTQ4IiBjeT0iNDUiIHI9IjEzIiBmaWxsPSIjNGQ5ZTZiIi8+CiAgICA8ZWxsaXBzZSBjeD0iMTQzLjUiIGN5PSIzOS41IiByeD0iNCIgcnk9IjUuNCIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC4yOCIvPgogICAgPHJlY3QgeD0iMTgwIiB5PSI3NiIgd2lkdGg9IjgiIGhlaWdodD0iNiIgZmlsbD0iI2M5YTg2YSIvPgogICAgPGNpcmNsZSBjeD0iMTg0IiBjeT0iOTIiIHI9IjkuNSIgZmlsbD0iI2VmZTZjZiIvPgogICAgPGVsbGlwc2UgY3g9IjE4MSIgY3k9Ijg3LjUiIHJ4PSIzIiByeT0iNCIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC4zNSIvPgogIDwvZz4KICA8ZyBmaWxsPSIjZTNiMzQxIiBvcGFjaXR5PSIwLjgiPgogICAgPGNpcmNsZSBjeD0iNjIiIGN5PSIxMTIiIHI9IjIuMiIvPjxjaXJjbGUgY3g9IjEyMiIgY3k9IjExOCIgcj0iMi4yIi8+PGNpcmNsZSBjeD0iMTY4IiBjeT0iMTIyIiByPSIyLjIiLz48Y2lyY2xlIGN4PSIxNCIgY3k9Ijk2IiByPSIyLjIiLz4KICA8L2c+Cjwvc3ZnPgo=)}
+.day-pat-3{background-image:linear-gradient(rgba(10,20,14,.70),rgba(10,20,14,.70)),url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMjAiIGhlaWdodD0iMTAwIiB2aWV3Qm94PSIwIDAgMjIwIDEwMCI+CiAgPHBhdGggZD0iTS01IDYgUTU1IDYyIDExMCAzMCBUMjI1IDQiIGZpbGw9Im5vbmUiIHN0cm9rZT0iIzM1Njg0YSIgc3Ryb2tlLXdpZHRoPSI5IiBzdHJva2UtbGluZWNhcD0icm91bmQiLz4KICA8cGF0aCBkPSJNLTUgNiBRNTUgNjIgMTEwIDMwIFQyMjUgNCIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjNGQ5ZTZiIiBzdHJva2Utd2lkdGg9IjMuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtZGFzaGFycmF5PSI1IDciLz4KICA8cGF0aCBkPSJNLTUgNTYgUTYwIDEwMCAxMjggNzQgVDIyNSA1MiIgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMmM1YTNlIiBzdHJva2Utd2lkdGg9IjgiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgb3BhY2l0eT0iMC44NSIvPgogIDxnIGZpbGw9IiNkMzRhNjMiPgogICAgPGNpcmNsZSBjeD0iMzAiIGN5PSIzMCIgcj0iNCIvPjxjaXJjbGUgY3g9IjQyIiBjeT0iMzYiIHI9IjMuNCIvPjxjaXJjbGUgY3g9Ijg0IiBjeT0iMzgiIHI9IjQiLz48Y2lyY2xlIGN4PSIxNDAiIGN5PSIyNCIgcj0iNCIvPjxjaXJjbGUgY3g9IjE1MiIgY3k9IjMxIiByPSIzLjQiLz48Y2lyY2xlIGN4PSIxOTIiIGN5PSIxNiIgcj0iNCIvPgogICAgPGNpcmNsZSBjeD0iNTIiIGN5PSI4MiIgcj0iMy42Ii8+PGNpcmNsZSBjeD0iMTE4IiBjeT0iODAiIHI9IjMuNiIvPjxjaXJjbGUgY3g9IjE3NiIgY3k9IjY2IiByPSIzLjYiLz4KICA8L2c+CiAgPGcgZmlsbD0iI2UzYjM0MSI+CiAgICA8Y2lyY2xlIGN4PSI2NCIgY3k9IjQwIiByPSIyLjQiLz48Y2lyY2xlIGN4PSIxMDYiIGN5PSIzMCIgcj0iMi40Ii8+PGNpcmNsZSBjeD0iMTY4IiBjeT0iMjIiIHI9IjIuNCIvPjxjaXJjbGUgY3g9Ijg4IiBjeT0iODgiIHI9IjIuNCIvPjxjaXJjbGUgY3g9IjE1MCIgY3k9IjcyIiByPSIyLjQiLz4KICA8L2c+Cjwvc3ZnPgo=)}
+.day-pat-4{background-image:linear-gradient(rgba(10,20,14,.74),rgba(10,20,14,.74)),url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5NiIgaGVpZ2h0PSI5NiIgdmlld0JveD0iMCAwIDk2IDk2Ij4KICA8ZyB0cmFuc2Zvcm09InJvdGF0ZSg0NSA0OCA0OCkiPgogICAgPGcgc3Ryb2tlPSIjZWZlNmNmIiBzdHJva2Utd2lkdGg9IjEzIiBvcGFjaXR5PSIwLjMyIj4KICAgICAgPHBhdGggZD0iTS0zMCAtNDBWMTM2Ii8+PHBhdGggZD0iTTI2IC00MFYxMzYiLz48cGF0aCBkPSJNODIgLTQwVjEzNiIvPjxwYXRoIGQ9Ik0xMzggLTQwVjEzNiIvPgogICAgPC9nPgogICAgPGcgc3Ryb2tlPSIjYzg0MDVhIiBzdHJva2Utd2lkdGg9IjEzIiBvcGFjaXR5PSIwLjUiPgogICAgICA8cGF0aCBkPSJNLTIgLTQwVjEzNiIvPjxwYXRoIGQ9Ik01NCAtNDBWMTM2Ii8+PHBhdGggZD0iTTExMCAtNDBWMTM2Ii8+CiAgICA8L2c+CiAgPC9nPgo8L3N2Zz4K)}
+.day-pat-5{background-image:linear-gradient(rgba(10,20,14,.72),rgba(10,20,14,.72)),url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjAiIGhlaWdodD0iMTIwIiB2aWV3Qm94PSIwIDAgMTIwIDEyMCI+CiAgPGcgZmlsbD0iI2UzYjM0MSIgb3BhY2l0eT0iMC4zIj4KICAgIDxyZWN0IHg9IjgiIHk9IjAiIHdpZHRoPSI5IiBoZWlnaHQ9IjEyMCIvPjxyZWN0IHg9IjY4IiB5PSIwIiB3aWR0aD0iNCIgaGVpZ2h0PSIxMjAiLz4KICAgIDxyZWN0IHg9IjAiIHk9IjgiIHdpZHRoPSIxMjAiIGhlaWdodD0iOSIvPjxyZWN0IHg9IjAiIHk9IjY4IiB3aWR0aD0iMTIwIiBoZWlnaHQ9IjQiLz4KICA8L2c+CiAgPGcgZmlsbD0iI2M4NDA1YSIgb3BhY2l0eT0iMC4zOCI+CiAgICA8cmVjdCB4PSIzOCIgeT0iMCIgd2lkdGg9IjQiIGhlaWdodD0iMTIwIi8+PHJlY3QgeD0iOTgiIHk9IjAiIHdpZHRoPSI5IiBoZWlnaHQ9IjEyMCIvPgogICAgPHJlY3QgeD0iMCIgeT0iMzgiIHdpZHRoPSIxMjAiIGhlaWdodD0iNCIvPjxyZWN0IHg9IjAiIHk9Ijk4IiB3aWR0aD0iMTIwIiBoZWlnaHQ9IjkiLz4KICA8L2c+CiAgPGcgZmlsbD0iI2VmZTZjZiIgb3BhY2l0eT0iMC43NSI+CiAgICA8cGF0aCBkPSJNODggMjZsMi4yIDUuNCA1LjQgMi4yLTUuNCAyLjJMODggNDEuMmwtMi4yLTUuNC01LjQtMi4yIDUuNC0yLjJ6Ii8+CiAgICA8cGF0aCBkPSJNMjggODRsMS44IDQuNCA0LjQgMS44LTQuNCAxLjhMMjggOTYuNGwtMS44LTQuNC00LjQtMS44IDQuNC0xLjh6Ii8+CiAgICA8Y2lyY2xlIGN4PSI1NiIgY3k9IjU2IiByPSIyLjIiLz48Y2lyY2xlIGN4PSIxMTAiIGN5PSI1OCIgcj0iMiIvPjxjaXJjbGUgY3g9IjU0IiBjeT0iMTEyIiByPSIyIi8+CiAgPC9nPgo8L3N2Zz4K)}
+.day-pat-6{background-image:linear-gradient(rgba(10,20,14,.70),rgba(10,20,14,.70)),url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxODAiIGhlaWdodD0iMTgwIiB2aWV3Qm94PSIwIDAgMTgwIDE4MCI+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNDggNTIpIj4KICAgIDxnIGZpbGw9IiMzZDhiNWMiIG9wYWNpdHk9IjAuOSI+CiAgICAgIDxlbGxpcHNlIGN4PSItMTYiIGN5PSItNCIgcng9IjIwIiByeT0iOSIgdHJhbnNmb3JtPSJyb3RhdGUoLTMyKSIvPgogICAgICA8ZWxsaXBzZSBjeD0iMTQiIGN5PSItMTAiIHJ4PSIyMCIgcnk9IjkiIHRyYW5zZm9ybT0icm90YXRlKDI0KSIvPgogICAgICA8ZWxsaXBzZSBjeD0iMCIgY3k9IjE0IiByeD0iMTgiIHJ5PSI4IiB0cmFuc2Zvcm09InJvdGF0ZSg4NCkiLz4KICAgIDwvZz4KICAgIDxnIGZpbGw9IiNkMzRhNjMiPgogICAgICA8Y2lyY2xlIGN4PSItMyIgY3k9IjAiIHI9IjYiLz48Y2lyY2xlIGN4PSI4IiBjeT0iNSIgcj0iNS4yIi8+PGNpcmNsZSBjeD0iMSIgY3k9Ii04IiByPSI0LjYiLz4KICAgIDwvZz4KICAgIDxjaXJjbGUgY3g9Ii01IiBjeT0iLTIiIHI9IjEuNyIgZmlsbD0iI2ZmZmZmZiIgb3BhY2l0eT0iMC41Ii8+CiAgPC9nPgogIDxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEzOCAxMzQpIHNjYWxlKDAuNzgpIj4KICAgIDxnIGZpbGw9IiMzNTdhNGYiIG9wYWNpdHk9IjAuOSI+CiAgICAgIDxlbGxpcHNlIGN4PSItMTYiIGN5PSItNCIgcng9IjIwIiByeT0iOSIgdHJhbnNmb3JtPSJyb3RhdGUoLTMyKSIvPgogICAgICA8ZWxsaXBzZSBjeD0iMTQiIGN5PSItMTAiIHJ4PSIyMCIgcnk9IjkiIHRyYW5zZm9ybT0icm90YXRlKDI0KSIvPgogICAgICA8ZWxsaXBzZSBjeD0iMCIgY3k9IjE0IiByeD0iMTgiIHJ5PSI4IiB0cmFuc2Zvcm09InJvdGF0ZSg4NCkiLz4KICAgIDwvZz4KICAgIDxnIGZpbGw9IiNjODQwNWEiPgogICAgICA8Y2lyY2xlIGN4PSItMyIgY3k9IjAiIHI9IjYiLz48Y2lyY2xlIGN4PSI4IiBjeT0iNSIgcj0iNS4yIi8+PGNpcmNsZSBjeD0iMSIgY3k9Ii04IiByPSI0LjYiLz4KICAgIDwvZz4KICA8L2c+CiAgPGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTUyIDM0KSBzY2FsZSgwLjU1KSI+CiAgICA8ZyBmaWxsPSIjM2Q4YjVjIiBvcGFjaXR5PSIwLjg1Ij4KICAgICAgPGVsbGlwc2UgY3g9Ii0xNiIgY3k9Ii00IiByeD0iMjAiIHJ5PSI5IiB0cmFuc2Zvcm09InJvdGF0ZSgtMzIpIi8+CiAgICAgIDxlbGxpcHNlIGN4PSIxNCIgY3k9Ii0xMCIgcng9IjIwIiByeT0iOSIgdHJhbnNmb3JtPSJyb3RhdGUoMjQpIi8+CiAgICA8L2c+CiAgICA8ZyBmaWxsPSIjZDM0YTYzIj4KICAgICAgPGNpcmNsZSBjeD0iLTMiIGN5PSIwIiByPSI2Ii8+PGNpcmNsZSBjeD0iOCIgY3k9IjUiIHI9IjUuMiIvPgogICAgPC9nPgogIDwvZz4KICA8ZyBmaWxsPSIjZTNiMzQxIiBvcGFjaXR5PSIwLjciPgogICAgPGNpcmNsZSBjeD0iOTIiIGN5PSI5NiIgcj0iMi4yIi8+PGNpcmNsZSBjeD0iMzAiIGN5PSIxNDAiIHI9IjIuMiIvPjxjaXJjbGUgY3g9IjExMiIgY3k9IjI0IiByPSIyLjIiLz4KICA8L2c+Cjwvc3ZnPgo=)}
+.day-title{font-family:"DM Serif Display",Georgia,serif;font-size:1.45rem;font-weight:400;line-height:1.15}
+.day-meta{display:inline-flex;align-items:center;gap:10px;flex:0 0 auto}
+.day-count{padding:4px 9px;background:rgba(243,239,228,.18);font-family:"Source Sans 3",sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:#f0d48a;white-space:nowrap}
+.day-group:not(.collapsed) .day-count{background:var(--gold);color:#2a1e04;text-shadow:none}
+.day-chevron{width:36px;height:36px;flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;border:1px solid rgba(243,239,228,.45);color:#f0d48a;background:rgba(10,20,14,.35)}
+.day-group:not(.collapsed) .day-chevron{background:var(--berry);border-color:var(--berry);color:#fff}
+.day-chevron svg{width:19px;height:19px;transition:transform .3s ease}
+.day-group:not(.collapsed) .day-chevron svg{transform:rotate(180deg)}
+.day-body{display:grid;grid-template-rows:1fr;transition:grid-template-rows .38s ease}
+.day-group.collapsed .day-body{grid-template-rows:0fr}
+.day-body-inner{overflow:hidden;min-height:0}
+.day-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start;padding:16px 0 24px}
+.day-group.collapsed .day-cards{visibility:hidden}
+.day-controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 18px;margin:0 0 18px}
+.day-controls-note{color:var(--muted);font-size:.92rem}
+.day-controls-btns{display:inline-flex;gap:8px;flex-wrap:wrap}
+.day-all-btn{min-height:44px;padding:0 15px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;font-weight:600}
+.day-all-btn:hover{border-color:var(--pine);color:var(--pine)}
+@media (max-width:1020px){.day-cards{grid-template-columns:1fr 1fr}}
+@media (max-width:580px){.day-cards{grid-template-columns:1fr}.day-title{font-size:1.22rem}.day-toggle{padding:11px 13px}.day-count{font-size:.7rem}}
+@media (prefers-reduced-motion: reduce){.day-body,.day-chevron svg{transition:none}}
+@media print{.day-body{grid-template-rows:1fr!important}.day-group.collapsed .day-cards{visibility:visible!important}.day-controls{display:none}}
 .filter[aria-pressed="true"]{background:var(--pine);color:#fff;border-color:var(--pine)}
 .city-wrap{display:flex;align-items:center;gap:8px;font-size:.85rem;font-weight:600;color:var(--muted)}
 .city-wrap select{min-height:44px;padding:0 12px;border:1px solid var(--line);background:var(--surface);color:var(--ink);font:inherit;font-size:.95rem;cursor:pointer}
@@ -304,7 +335,11 @@ main{width:min(1180px,calc(100% - 40px));margin:0 auto}
   <section aria-labelledby="upcoming-title">
     <div class="section-head">
       <h2 id="upcoming-title">Coming up, in date order</h2>
-      <p>Grouped under the day each event starts, next event first, like a calendar. Past events drop off automatically once their last day has passed. Schedules can change — confirm with the organizer before you head out.</p>
+      <p>Grouped under the day each event starts, next event first, like a calendar. Tap a date to drop that day's events down — tap it again to fold them back up. Past events drop off automatically once their last day has passed. Schedules can change — confirm with the organizer before you head out.</p>
+    </div>
+    <div class="day-controls">
+      <span class="day-controls-note">The soonest day starts open. Every other day is one tap away.</span>
+      <span class="day-controls-btns"><button class="day-all-btn" type="button" id="expandAllDays">Open all days</button><button class="day-all-btn" type="button" id="collapseAllDays">Close all days</button></span>
     </div>
     <div class="event-grid" id="events">
 
@@ -1487,24 +1522,73 @@ main{width:min(1180px,calc(100% - 40px));margin:0 auto}
     churchEvents=churchEvents.filter(function(ev){return ev.isConnected;});
   })();
 
-  // Group main list under day headings (by start date), with per-day counts
-  var dayHeads={};
+  // Group the main list into collapsible day sections (by start date).
+  // Each day gets a tappable header — date, event count and a chevron —
+  // that drops its cards down or folds them back up. Only the soonest
+  // upcoming day starts open; the rest start closed. While a search or
+  // filter is active, apply() forces every day with a match open so
+  // results are never trapped inside a closed day.
+  var dayGroups={};
+  var dayOrder=[];
+  var prevFiltering=false;
+  function paintDay(g,open){
+    g.section.classList.toggle('collapsed',!open);
+    g.toggle.setAttribute('aria-expanded',open?'true':'false');
+    g.body.inert=!open;
+  }
   (function groupDays(){
     var grid=document.getElementById('events');
     var dayNames=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-    var monthNames=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    var monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
+    var byDay={};
     mainEvents.forEach(function(ev){
       var d=(ev.getAttribute('data-cal-start')||'').slice(0,10);
       if(!d) return;
       ev.setAttribute('data-day',d);
-      if(!dayHeads[d]){
-        var p=d.split('-');
-        var dt=new Date(+p[0],+p[1]-1,+p[2]);
-        var h=document.createElement('h3');
-        h.className='day-head'; h.id='day-'+d;
-        h.innerHTML=dayNames[dt.getDay()]+', '+monthNames[dt.getMonth()]+' '+dt.getDate()+' <span class="day-count"></span>';
-        grid.insertBefore(h,ev);
-        dayHeads[d]=h;
+      if(!byDay[d]){ byDay[d]=[]; dayOrder.push(d); }
+      byDay[d].push(ev);
+    });
+    dayOrder.sort();
+    var frag=document.createDocumentFragment();
+    dayOrder.forEach(function(d,idx){
+      var p=d.split('-');
+      var dt=new Date(+p[0],+p[1]-1,+p[2]);
+      var section=document.createElement('section');
+      section.className='day-group';
+      var h=document.createElement('h3');
+      h.className='day-head'; h.id='day-'+d;
+      var btn=document.createElement('button');
+      btn.type='button'; btn.className='day-toggle day-pat-'+(idx%7);
+      btn.setAttribute('aria-expanded','false');
+      btn.setAttribute('aria-controls','day-body-'+d);
+      btn.innerHTML='<span class="day-title">'+dayNames[dt.getDay()]+', '+monthNames[dt.getMonth()]+' '+dt.getDate()+'</span><span class="day-meta"><span class="day-count"></span><span class="day-chevron" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m5 9 7 7 7-7"/></svg></span></span>';
+      h.appendChild(btn);
+      var body=document.createElement('div');
+      body.className='day-body'; body.id='day-body-'+d;
+      var inner=document.createElement('div'); inner.className='day-body-inner';
+      var cards=document.createElement('div'); cards.className='day-cards';
+      byDay[d].forEach(function(ev){ cards.appendChild(ev); });
+      inner.appendChild(cards); body.appendChild(inner);
+      section.appendChild(h); section.appendChild(body);
+      frag.appendChild(section);
+      var g={day:d,section:section,head:h,body:body,toggle:btn,count:btn.querySelector('.day-count'),events:byDay[d],open:false};
+      dayGroups[d]=g;
+      btn.addEventListener('click',function(){ g.open=!g.open; apply(); });
+    });
+    grid.appendChild(frag);
+    dayOrder.forEach(function(d,i){ var g=dayGroups[d]; g.open=i===0; paintDay(g,g.open); });
+    var expandAll=document.getElementById('expandAllDays');
+    var collapseAll=document.getElementById('collapseAllDays');
+    if(expandAll) expandAll.addEventListener('click',function(){ dayOrder.forEach(function(d){ dayGroups[d].open=true; }); apply(); });
+    if(collapseAll) collapseAll.addEventListener('click',function(){ dayOrder.forEach(function(d){ dayGroups[d].open=false; }); apply(); });
+    // Jump-to chips open their day first, so the anchor lands on its events
+    Array.prototype.slice.call(document.querySelectorAll('.jump-chip')).forEach(function(chip){
+      var href=chip.getAttribute('href')||'';
+      if(href.indexOf('#day-')===0){
+        chip.addEventListener('click',function(){
+          var g=dayGroups[href.slice(5)];
+          if(g&&!g.open){ g.open=true; apply(); }
+        });
       }
     });
   })();
@@ -1624,11 +1708,21 @@ main{width:min(1180px,calc(100% - 40px));margin:0 auto}
       if(emptyEl) emptyEl.style.display=visible?'none':'block';
     }
     run(mainEvents,emptyMain); run(churchEvents,emptyChurch);
-    Object.keys(dayHeads).forEach(function(d){
-      var vis=mainEvents.filter(function(ev){ return ev.getAttribute('data-day')===d&&!ev.classList.contains('hidden'); }).length;
-      var head=dayHeads[d];
-      head.classList.toggle('hidden',vis===0);
-      head.querySelector('.day-count').textContent=vis+(vis===1?' event':' events');
+    var filtering=q!==''||active!=='all'||city!=='all';
+    // When a search/filter session ends, restore the collapsed default:
+    // only the soonest upcoming day open, the rest tucked back up.
+    if(prevFiltering&&!filtering){
+      dayOrder.forEach(function(d,i){ dayGroups[d].open=(i===0); });
+    }
+    prevFiltering=filtering;
+    dayOrder.forEach(function(d){
+      var g=dayGroups[d];
+      if(!g) return;
+      var vis=g.events.filter(function(ev){ return !ev.classList.contains('hidden'); }).length;
+      var total=g.events.length;
+      g.section.classList.toggle('hidden',vis===0);
+      g.count.textContent=(filtering&&vis!==total) ? vis+' of '+total+(total===1?' event':' events') : total+(total===1?' event':' events');
+      paintDay(g, filtering ? vis>0 : g.open);
     });
   }
   search.addEventListener('input',apply);
