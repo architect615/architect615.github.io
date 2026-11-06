@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="color-scheme" content="dark" />
+<meta name="description" content="Middle Tennessee Events — pick your events page: Nashville Car Events or Middle Tennessee Holiday Events." />
+<link rel="icon" href="data:," />
+<title>Middle Tennessee Events</title>
+<style>
+  :root{
+    color-scheme: dark;
+    --bg:#0d1117;
+    --ink:#f5f2ea;
+    --ink-2:#c9cfd6;
+    --ink-3:#8f9aa6;
+    --card:#171d26;
+    --card-2:#1c242f;
+    --line:#2b3542;
+    --car-accent:#7ee08a;
+    --car-tint:#16251a;
+    --holiday-accent:#ff9d5c;
+    --holiday-tint:#2a1c14;
+    --focus:#6cb6ff;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+  }
+  a{color:inherit}
+  a:focus-visible{outline:3px solid var(--focus); outline-offset:3px}
+
+  .wrap{
+    width:100%;
+    max-width:560px;
+    margin:0 auto;
+    padding:48px 20px 28px;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+  }
+  @media (min-width:760px){
+    .wrap{padding-top:72px}
+  }
+
+  header{text-align:center; margin-bottom:28px}
+  h1{
+    font-size:clamp(34px, 8vw, 46px);
+    line-height:1.05;
+    letter-spacing:-.02em;
+    font-weight:800;
+    margin:0 0 12px;
+  }
+  .pick{
+    margin:0;
+    font-size:18px;
+    color:var(--ink-2);
+    font-weight:500;
+  }
+
+  main{display:flex; flex-direction:column; gap:16px}
+
+  .choice{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    width:100%;
+    min-height:132px;
+    padding:24px 22px;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:18px;
+    text-decoration:none;
+    transition:background .15s ease, transform .15s ease, border-color .15s ease;
+  }
+  .choice:hover{background:var(--card-2)}
+  .choice:active{transform:scale(.99)}
+  .choice .emoji{
+    font-size:44px;
+    line-height:1;
+    flex:0 0 auto;
+    width:64px; height:64px;
+    display:grid; place-items:center;
+    border-radius:14px;
+  }
+  .emoji--car{background:var(--car-tint)}
+  .emoji--holiday{background:var(--holiday-tint)}
+  .choice-text{flex:1; min-width:0}
+  .choice h2{
+    font-size:clamp(21px, 5.4vw, 25px);
+    line-height:1.15;
+    font-weight:800;
+    letter-spacing:-.01em;
+    margin:0 0 5px;
+  }
+  .choice p{
+    margin:0;
+    font-size:15.5px;
+    line-height:1.45;
+    color:var(--ink-2);
+  }
+  .choice .note{
+    display:block;
+    margin-top:8px;
+    font-size:13px;
+    font-weight:600;
+  }
+  .note--car{color:var(--car-accent)}
+  .note--holiday{color:var(--holiday-accent)}
+  .choice .arrow{
+    flex:0 0 auto;
+    font-size:26px;
+    line-height:1;
+    color:var(--ink-3);
+    font-weight:300;
+  }
+
+  footer{
+    margin-top:auto;
+    padding-top:36px;
+    text-align:center;
+  }
+  footer a{
+    font-size:14.5px;
+    font-weight:600;
+    color:var(--ink-2);
+    text-decoration:none;
+  }
+  footer a:hover{color:var(--ink); text-decoration:underline}
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition:none !important}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Middle Tennessee Events</h1>
+      <p class="pick">Pick your events page:</p>
+    </header>
+
+    <main>
+      <a class="choice" href="/car-events/" aria-label="Nashville Car Events — Cars and Coffee, cruises, shows and meets across Middle Tennessee">
+        <span class="emoji emoji--car" aria-hidden="true">🏎️</span>
+        <span class="choice-text">
+          <h2>Nashville Car Events</h2>
+          <p>Cars &amp; Coffee, cruises, shows &amp; meets across Middle Tennessee</p>
+          <span class="note note--car">New events added every week</span>
+        </span>
+        <span class="arrow" aria-hidden="true">›</span>
+      </a>
+
+      <a class="choice" href="/holiday-events/" aria-label="Middle Tennessee Holiday Events — Parades, tree lightings, concerts, Santa and church events">
+        <span class="emoji emoji--holiday" aria-hidden="true">🎄</span>
+        <span class="choice-text">
+          <h2>Middle Tennessee Holiday Events</h2>
+          <p>Parades, tree lightings, concerts, Santa &amp; church events</p>
+          <span class="note note--holiday">175+ events listed</span>
+        </span>
+        <span class="arrow" aria-hidden="true">›</span>
+      </a>
+    </main>
+
+    <footer>
+      <a href="https://www.instagram.com/dancuschieri" target="_blank" rel="noopener">Follow @dancuschieri on Instagram</a>
+    </footer>
+  </div>
+</body>
+</html>
