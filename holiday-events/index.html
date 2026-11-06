@@ -90,14 +90,18 @@ main{width:min(1180px,calc(100% - 40px));margin:0 auto}
 .section-head{display:flex;justify-content:space-between;align-items:end;gap:22px;margin-bottom:20px}
 .section-head h2{margin:0;font-size:clamp(2rem,4.6vw,3.4rem);line-height:1;text-transform:none}
 .section-head p{max-width:480px;margin:0;color:var(--muted);font-size:.93rem}
-.event-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.event-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start}
 .event{background:var(--surface);border:1px solid var(--line);display:flex;flex-direction:column;overflow:hidden;transition:border-color .18s ease,transform .18s ease}
 .event:hover{border-color:var(--ink);transform:translateY(-2px)}
 .event-photo{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--surface2)}
 .event-photo img{width:100%;height:100%;object-fit:cover;display:block}
-.date-badge{position:absolute;left:12px;bottom:12px;background:rgba(16,28,20,.92);color:#f3efe4;padding:7px 11px;font-weight:700;font-size:.82rem;letter-spacing:.02em;line-height:1.25}
-.date-badge small{display:block;font-weight:600;font-size:.68rem;text-transform:uppercase;letter-spacing:.09em;color:#f0d48a}
-.event-copy{padding:18px 19px 19px;display:flex;flex-direction:column;flex:1}
+.date-badge{position:absolute;left:0;top:0;bottom:0;z-index:2;width:128px;display:flex;flex-direction:column;padding:14px 13px 13px;background:rgba(16,28,20,.95);color:#fff;box-shadow:6px 0 20px rgba(10,20,14,.35)}
+.date-badge small{display:block;font-weight:700;font-size:.8rem;text-transform:uppercase;letter-spacing:.09em;line-height:1.3;color:#f0d48a}
+.badge-day{display:block;margin-top:8px;font-weight:800;font-size:3.2rem;line-height:.95;letter-spacing:.01em}
+.badge-day.range{font-size:2.1rem;line-height:1}
+.badge-day.wide{font-size:1.3rem;line-height:1.2}
+.date-badge .badge-time{display:block;margin-top:auto;padding-top:10px;font-size:1.14rem;font-weight:800;letter-spacing:.01em;line-height:1.25;color:#fff}
+.event-copy{padding:12px 14px 13px;display:flex;flex-direction:column;flex:1}
 .tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:9px}
 .tag{padding:3px 8px;color:var(--muted);background:var(--surface2);font-size:.68rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
 .tag.free{color:var(--free-ink);background:var(--free-bg)}
@@ -111,15 +115,19 @@ main{width:min(1180px,calc(100% - 40px));margin:0 auto}
 .venue li .v-cost.paid{background:#eec95e;color:#3a2c05}
 .event h3{margin:0;font-size:1.42rem;line-height:1.12}
 .event-desc{margin:9px 0 0;color:var(--muted);font-size:.9rem}
-.event-meta{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:11px;color:var(--muted);font-size:.86rem}
+.event-meta{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:9px;color:var(--muted);font-size:.95rem;font-weight:600}
 .event-meta span{display:inline-flex;gap:6px;align-items:center}
 .event-meta svg{width:15px;height:15px;flex:0 0 auto}
-.event-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:auto;padding-top:16px}
+.event-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}
 .event-link,.calendar-menu summary{min-height:40px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 13px;border:1px solid var(--line);background:transparent;color:var(--ink);text-decoration:none;font-size:.82rem;font-weight:700;cursor:pointer}
 .event-link svg,.calendar-menu summary svg{width:16px;height:16px;flex:0 0 auto}
 .event-link:hover,.calendar-menu summary:hover{border-color:var(--ink);background:var(--surface2)}
 .event-link.watch{border-color:var(--berry);color:var(--berry)}
 .event-link.watch:hover{background:var(--berry);color:#fff}
+.event-link.info-link{background:var(--pine);border-color:var(--pine);color:var(--pine-ink)}
+.event-link.info-link:hover{background:var(--berry);border-color:var(--berry);color:#fff}
+.event-photo .info-link{position:absolute;right:12px;bottom:12px;z-index:3;background:var(--berry);border-color:var(--berry);color:#fff;box-shadow:0 8px 20px rgba(10,20,14,.45);min-height:44px;padding:0 17px;font-size:.92rem}
+.event-photo .info-link:hover{background:var(--berry-dark);border-color:var(--berry-dark);color:#fff}
 .calendar-menu{position:relative}
 .calendar-menu summary{list-style:none}
 .calendar-menu summary::-webkit-details-marker{display:none}
@@ -142,6 +150,8 @@ main{width:min(1180px,calc(100% - 40px));margin:0 auto}
 .church-band .tag.free{background:#f0d48a;color:#3a2c05}
 .church-band .event-link,.church-band .calendar-menu summary{border-color:#4a6a56;color:#f3efe4}
 .church-band .event-link:hover,.church-band .calendar-menu summary:hover{background:#2e4a39;border-color:#f0d48a}
+.church-band .event-link.info-link{background:#f0d48a;border-color:#f0d48a;color:#14231b}
+.church-band .event-link.info-link:hover{background:#fff;border-color:#fff;color:#14231b}
 .church-band .calendar-options{background:var(--surface)}
 .church-band .calendar-options a{color:var(--ink)}
 .church-watch{margin-top:22px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
@@ -189,6 +199,12 @@ main{width:min(1180px,calc(100% - 40px));margin:0 auto}
   .filters{display:grid;grid-template-columns:1fr 1fr 1fr}
   .filter{padding:0 6px;font-size:.8rem}
   .event-actions{align-items:stretch}
+  .date-badge{width:112px;padding:12px 11px 11px}
+  .date-badge small{font-size:.74rem}
+  .badge-day{font-size:2.7rem}
+  .badge-day.range{font-size:1.8rem}
+  .badge-day.wide{font-size:1.14rem}
+  .date-badge .badge-time{font-size:1.02rem}
   .event-link,.calendar-menu{flex:1 1 140px}
   .calendar-menu summary{width:100%}
   .calendar-options{left:auto;right:0}
@@ -1494,6 +1510,83 @@ main{width:min(1180px,calc(100% - 40px));margin:0 auto}
   })();
 
   allEvents.forEach(addCalendar);
+
+  // Card polish: one photo treatment on every card, like the car events page —
+  // a solid date rail down the left side of the photo (month · weekday on top,
+  // the day number big beneath it, the time at the bottom) and the More info
+  // button overlaid at the photo's bottom-right. Every card's rail is rebuilt
+  // from its calendar data so the date and time sit in the same spot, at the
+  // same size, on all 194 cards; the time is lifted out of the meta line into
+  // the rail so the body below stays slim.
+  (function decorate(){
+    var dayShort=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    var dayFull=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    var monShort=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    function parseD(v){ if(!v) return null; var p=v.slice(0,10).split('-'); return new Date(+p[0],+p[1]-1,+p[2]); }
+    function fmtT(v){
+      var t=v.slice(11,16); if(!t) return null;
+      var p=t.split(':'), h=+p[0], m=+p[1], ap=h>=12?'pm':'am', hh=h%12; if(hh===0) hh=12;
+      return { txt: hh+(m?':'+('0'+m).slice(-2):'')+ap, ap: ap };
+    }
+    function timeRange(ev){
+      var s=ev.getAttribute('data-cal-start')||'', e=ev.getAttribute('data-cal-end')||'';
+      if(s.length<16) return '';
+      var a=fmtT(s), b=e.length>=16?fmtT(e):null;
+      if(!a) return '';
+      if(!b||b.txt===a.txt) return a.txt;
+      if(a.ap===b.ap) return a.txt.replace(/(am|pm)$/,'')+'–'+b.txt;
+      return a.txt+'–'+b.txt;
+    }
+    allEvents.forEach(function(ev){
+      var photo=ev.querySelector('.event-photo');
+      if(!photo) return;
+      var badge=ev.querySelector('.date-badge');
+      var meta=ev.querySelector('.event-meta');
+      var spans=meta?Array.prototype.slice.call(meta.querySelectorAll('span')):[];
+      var timeText='';
+      for(var i=0;i<spans.length;i++){
+        if(/(am|pm)/i.test(spans[i].textContent)){ timeText=spans[i].textContent.trim(); spans[i].remove(); break; }
+      }
+      if(!timeText) timeText=timeRange(ev);
+      if(!timeText){
+        for(var j=0;j<spans.length;j++){
+          if(/^(Evening|Morning|Afternoon|Sunset|Dusk)\b/.test(spans[j].textContent.trim())){ timeText=spans[j].textContent.trim(); spans[j].remove(); break; }
+        }
+      }
+      var sd=parseD(ev.getAttribute('data-cal-start')), ed=parseD(ev.getAttribute('data-cal-end'));
+      if(sd){
+        var last=ed||sd;
+        if(ev.getAttribute('data-cal-allday')==='1'&&ed){ last=new Date(ed.getTime()-86400000); if(last<sd) last=sd; }
+        var topLine='';
+        if(badge){ var bsm=badge.querySelector('small'); if(bsm) topLine=bsm.textContent.trim(); }
+        if(!topLine){
+          if(last.getTime()===sd.getTime()) topLine=monShort[sd.getMonth()]+' · '+dayFull[sd.getDay()];
+          else if(last.getMonth()===sd.getMonth()) topLine=monShort[sd.getMonth()]+' · '+dayShort[sd.getDay()]+'–'+dayShort[last.getDay()];
+          else topLine=monShort[sd.getMonth()]+' – '+monShort[last.getMonth()];
+        }
+        var rail=document.createElement('span'); rail.className='date-badge';
+        var rSmall=document.createElement('small'); rSmall.textContent=topLine; rail.appendChild(rSmall);
+        var rDay=document.createElement('span'); rDay.className='badge-day';
+        if(last.getTime()===sd.getTime()){ rDay.textContent=sd.getDate(); }
+        else if(last.getMonth()===sd.getMonth()){ rDay.className+=' range'; rDay.textContent=sd.getDate()+'–'+last.getDate(); }
+        else { rDay.className+=' wide'; rDay.textContent=monShort[sd.getMonth()]+' '+sd.getDate()+' – '+monShort[last.getMonth()]+' '+last.getDate(); }
+        rail.appendChild(rDay);
+        if(timeText){ var bt=document.createElement('span'); bt.className='badge-time'; bt.textContent=timeText; rail.appendChild(bt); }
+        if(badge) badge.remove();
+        photo.appendChild(rail);
+      } else if(badge&&timeText){
+        var bt2=document.createElement('span'); bt2.className='badge-time'; bt2.textContent=timeText; badge.appendChild(bt2);
+      }
+      if(meta){
+        Array.prototype.slice.call(meta.querySelectorAll('span')).forEach(function(s){
+          if(/^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+\d{1,2}(\s*[–—-]\s*([A-Z][a-z]{2}\s+)?\d{1,2})?$/.test(s.textContent.trim())) s.remove();
+        });
+        if(!meta.querySelector('span')) meta.remove();
+      }
+      var info=ev.querySelector('a.info-link');
+      if(info) photo.appendChild(info);
+    });
+  })();
 
   document.addEventListener('click',function(e){
     document.querySelectorAll('.calendar-menu[open]').forEach(function(m){ if(!m.contains(e.target)) m.removeAttribute('open'); });
