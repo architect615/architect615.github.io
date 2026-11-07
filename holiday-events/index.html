@@ -273,6 +273,7 @@ section:not(.church-collapsed) .church-toggle .day-chevron svg{transform:rotate(
   .date-badge .badge-time.xlong{font-size:1.62rem}
 }
 @media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}.event{transition:none}}
+.submit-note{margin:16px auto 0;max-width:560px;font-size:.95rem;line-height:1.45;color:#fff;opacity:.94;cursor:pointer;text-decoration:underline dotted rgba(255,255,255,.6);text-underline-offset:3px}.submit-note strong{color:#ffd34d}
 </style>
 
 <style>
@@ -322,6 +323,7 @@ section:not(.church-collapsed) .church-toggle .day-chevron svg{transform:rotate(
       <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2"/></svg>Within ~50 miles of Franklin, TN</span>
       <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M7 3v4M17 3v4M3 10h18"/></svg>182 events + 12 church events</span>
     </div>
+    <p class="submit-note" id="submitNote" role="button" tabindex="0">Know of a holiday event we missed? <strong>Tap here</strong> — or use the chat bubble in the bottom-right corner — and send us the details. We'll add it after a quick check.</p>
   </div>
 </header>
 
@@ -1828,7 +1830,7 @@ section:not(.church-collapsed) .church-toggle .day-chevron svg{transform:rotate(
 <div class="chat-widget" id="chatWidget">
   <div class="chat-panel" id="chatPanel" hidden>
     <div class="chat-panel-head">Questions about an event?</div>
-    <p class="chat-panel-text">Message Dan directly and he can help you out.</p>
+    <p class="chat-panel-text">Message Dan directly and he can help you out. Know of a holiday event we missed? Send the details here and we'll add it after a quick check.</p>
     <a class="chat-opt chat-opt-ig" href="https://ig.me/m/dancuschieri" target="_blank" rel="noopener"><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6" fill="currentColor" stroke="none"/></svg>Message on Instagram</a>
     <a class="chat-opt chat-opt-fb" href="https://www.facebook.com/messages/t/1273310495" target="_blank" rel="noopener"><svg aria-hidden="true" viewBox="0 0 24 24" fill="currentColor"><path d="M14 8.5V6.8c0-.8.2-1.3 1.4-1.3H17V2.5h-2.6C11.7 2.5 11 3.9 11 6.5v2H8.5V12H11v9.5h3V12h2.7l.4-3.5H14z"/></svg>Message on Facebook</a>
   </div>
@@ -1840,6 +1842,9 @@ section:not(.church-collapsed) .church-toggle .day-chevron svg{transform:rotate(
   var panel=document.getElementById('chatPanel');
   var widget=document.getElementById('chatWidget');
   if(!fab||!panel||!widget) return;
+  var note=document.getElementById('submitNote');
+  function openPanel(){ panel.hidden=false; fab.setAttribute('aria-expanded','true'); }
+  if(note){ note.addEventListener('click',openPanel); note.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openPanel(); } }); }
   fab.addEventListener('click',function(){
     var open=panel.hidden;
     panel.hidden=!open;
