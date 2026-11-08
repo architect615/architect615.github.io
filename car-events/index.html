@@ -268,6 +268,9 @@
       .event-actions { align-items: stretch; }
       .event-link, .calendar-menu { flex: 1 1 145px; }
       .calendar-menu summary { width: 100%; }
+.waze-link { flex: 0 1 118px; color: #0a6ebd; }
+.waze-link svg { width: 18px; height: 18px; }
+.waze-link:hover { border-color: #0a6ebd; }
       .calendar-options { left: auto; right: 0; width: min(225px, calc(100vw - 118px)); }
       .watch { margin: 54px 0; }
       .watch-grid, .calendar-links { grid-template-columns: 1fr; }
@@ -344,7 +347,7 @@
         <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Snapshot checked Oct 28, 2026</span>
         <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2"/></svg>Middle Tennessee</span>
       </div>
-      <p class="last-updated">Last updated: Saturday, November 7, 2026 · 11:29 PM CT</p>
+      <p class="last-updated">Last updated: Sunday, November 8, 2026 · 12:24 AM CT</p>
       <p class="submit-note" id="submitNote" role="button" tabindex="0">Know of a car event we missed? <strong>Tap here</strong> — or use the chat bubble in the bottom-right corner — and send us the details. We'll add it after a quick check.</p>
     </div>
   </header>
@@ -871,6 +874,10 @@
       function arrowIcon() { return '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg>'; }
       function calendarIcon() { return '<svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M7 3v4M17 3v4M3 10h18M12 13v5M9.5 15.5h5"/></svg>'; }
 
+      function wazeIcon() {
+        return '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.218 0C9.915 0 6.835 1.49 4.723 4.148c-1.515 1.913-2.31 4.272-2.31 6.706v1.739c0 .894-.62 1.738-1.862 1.813-.298.025-.547.224-.547.522-.05.82.82 2.31 2.012 3.502.82.844 1.788 1.515 2.832 2.036a3 3 0 0 0 2.955 3.528 2.966 2.966 0 0 0 2.931-2.385h2.509c.323 1.689 2.086 2.856 3.974 2.21 1.64-.546 2.36-2.409 1.763-3.924a12.84 12.84 0 0 0 1.838-1.465 10.73 10.73 0 0 0 3.18-7.65c0-2.882-1.118-5.589-3.155-7.625A10.899 10.899 0 0 0 13.218 0zm0 1.217c2.558 0 4.967.994 6.78 2.807a9.525 9.525 0 0 1 2.807 6.78A9.526 9.526 0 0 1 20 17.585a9.647 9.647 0 0 1-6.78 2.807h-2.46a3.008 3.008 0 0 0-2.93-2.41 3.03 3.03 0 0 0-2.534 1.367v.024a8.945 8.945 0 0 1-2.41-1.788c-.844-.844-1.316-1.614-1.515-2.11a2.858 2.858 0 0 0 1.441-.846 2.959 2.959 0 0 0 .795-2.036v-1.789c0-2.11.696-4.197 2.012-5.861 1.863-2.385 4.62-3.726 7.6-3.726zm-2.41 5.986a1.192 1.192 0 0 0-1.191 1.192 1.192 1.192 0 0 0 1.192 1.193A1.192 1.192 0 0 0 12 8.395a1.192 1.192 0 0 0-1.192-1.192zm7.204 0a1.192 1.192 0 0 0-1.192 1.192 1.192 1.192 0 0 0 1.192 1.193 1.192 1.192 0 0 0 1.192-1.193 1.192 1.192 0 0 0-1.192-1.192zm-7.377 4.769a.596.596 0 0 0-.546.845 4.813 4.813 0 0 0 4.346 2.757 4.77 4.77 0 0 0 4.347-2.757.596.596 0 0 0-.547-.845h-.025a.561.561 0 0 0-.521.348 3.59 3.59 0 0 1-3.254 2.061 3.591 3.591 0 0 1-3.254-2.061.64.64 0 0 0-.546-.348z"/></svg>';
+      }
+
       function addCalendarControls(event, data, index) {
         var title = event.querySelector('h3').textContent.trim();
         var info = event.querySelector('.event-link');
@@ -910,6 +917,16 @@
         menu.className = 'calendar-menu';
         menu.innerHTML = '<summary>' + calendarIcon() + '<span>Add to calendar</span></summary><div class="calendar-options"><a href="' + google + '" target="_blank" rel="noopener">Google Calendar' + arrowIcon() + '</a><a href="' + outlook + '" target="_blank" rel="noopener">Outlook Calendar' + arrowIcon() + '</a><a href="' + icsHref + '" download="' + slugify(title) + '.ics">Apple / .ics' + arrowIcon() + '</a></div>';
         actions.appendChild(menu);
+        if (data.location) {
+          var waze = document.createElement('a');
+          waze.className = 'event-link waze-link';
+          waze.href = 'https://waze.com/ul?q=' + encodeURIComponent(data.location.replace(/ · /g, ', ')) + '&navigate=yes';
+          waze.target = '_blank';
+          waze.rel = 'noopener';
+          waze.setAttribute('aria-label', 'Get directions to ' + title + ' with Waze');
+          waze.innerHTML = wazeIcon() + '<span>Waze</span>';
+          actions.appendChild(waze);
+        }
         if (data.tentative) {
           var note = document.createElement('span');
           note.className = 'calendar-note';
