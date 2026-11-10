@@ -326,7 +326,7 @@ section:not(.church-collapsed) .church-toggle .day-chevron svg{transform:rotate(
       <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2"/></svg>Within ~50 miles of Franklin, TN</span>
       <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M7 3v4M17 3v4M3 10h18"/></svg>211 events + 22 church events</span>
     </div>
-    <p class="last-updated">Last updated: Monday, November 9, 2026 · 7:42 PM CT</p>
+    <p class="last-updated">Last updated: Monday, November 9, 2026 · 8:07 PM CT</p>
       <p class="submit-note" id="submitNote" role="button" tabindex="0">Know of a holiday event we missed? <strong>Tap here</strong> — or use the chat bubble in the bottom-right corner — and send us the details. We'll add it after a quick check.</p>
   </div>
 </header>
@@ -368,7 +368,7 @@ section:not(.church-collapsed) .church-toggle .day-chevron svg{transform:rotate(
   <section aria-labelledby="upcoming-title">
     <div class="section-head">
       <h2 id="upcoming-title">Coming up, in date order</h2>
-      <p>Grouped under the day each event starts, next event first, like a calendar. Tap a date to drop that day's events down — tap it again to fold them back up. Past events drop off automatically once their last day has passed. Schedules can change — confirm with the organizer before you head out.</p>
+      <p>Grouped by day, next event first, like a calendar. Events already underway and still running sit under today. Tap a date to drop that day's events down — tap it again to fold them back up. Past events drop off automatically once their last day has passed. Schedules can change — confirm with the organizer before you head out.</p>
     </div>
     <div class="day-controls">
       <span class="day-controls-note">The soonest day starts open. Every other day is one tap away.</span>
@@ -1844,9 +1844,11 @@ section:not(.church-collapsed) .church-toggle .day-chevron svg{transform:rotate(
     var dayNames=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
     var monthNames=['January','February','March','April','May','June','July','August','September','October','November','December'];
     var byDay={};
+    var today=todayChicago();
     mainEvents.forEach(function(ev){
       var d=(ev.getAttribute('data-cal-start')||'').slice(0,10);
       if(!d) return;
+      if(d<today&&(ev.getAttribute('data-end')||'')>=today) d=today;
       ev.setAttribute('data-day',d);
       if(!byDay[d]){ byDay[d]=[]; dayOrder.push(d); }
       byDay[d].push(ev);
