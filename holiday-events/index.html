@@ -84,6 +84,14 @@ section:not(.church-collapsed) .church-toggle .day-chevron svg{transform:rotate(
 .day-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;align-items:start;padding:16px 0 24px}
 .day-group.collapsed .day-cards{visibility:hidden}
 .day-more-btn{grid-column:1/-1;min-height:46px;padding:10px 16px;background:#9e1b32;color:#fff;border:none;border-radius:10px;font:inherit;font-weight:700;cursor:pointer}
+.fav-btn{position:absolute;left:10px;bottom:10px;z-index:6;width:40px;height:40px;border-radius:999px;border:1px solid rgba(0,0,0,.18);background:rgba(255,255,255,.94);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.fav-btn svg{width:22px;height:22px;fill:none;stroke:#57534e;stroke-width:2;stroke-linejoin:round}
+.fav-btn.is-fav svg{fill:#e0245e;stroke:#e0245e}
+.fav-btn.is-fav::after{content:'Favorite';position:absolute;left:47px;top:50%;transform:translateY(-50%);background:#e0245e;color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.02em;padding:3px 9px;border-radius:999px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.fav-view-btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 18px;border-radius:999px;border:1px solid rgba(127,127,127,.55);background:transparent;color:inherit;font:inherit;font-weight:700;cursor:pointer}
+.fav-view-btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+.fav-view-btn.is-on{background:#e0245e;border-color:#e0245e;color:#fff}
+.fav-view-btn.is-on svg{fill:#fff;stroke:#fff}
 .day-controls{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 18px;margin:0 0 18px}
 .day-controls-note{color:var(--muted);font-size:.92rem}
 .day-controls-btns{display:inline-flex;gap:8px;flex-wrap:wrap}
@@ -327,7 +335,7 @@ section:not(.church-collapsed) .church-toggle .day-chevron svg{transform:rotate(
       <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2"/></svg>Within ~50 miles of Franklin, TN</span>
       <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M7 3v4M17 3v4M3 10h18"/></svg>222 events + 23 church events</span>
     </div>
-    <p class="last-updated">Last updated: Sunday, November 15, 2026 · 7:51 AM CT</p>
+    <p class="last-updated">Last updated: Sunday, November 15, 2026 · 7:56 AM CT</p>
       <p class="submit-note" id="submitNote" role="button" tabindex="0">Know of a holiday event we missed? <strong>Tap here</strong> — or use the chat bubble in the bottom-right corner — and send us the details. We'll add it after a quick check.</p>
   </div>
 </header>
@@ -2100,15 +2108,15 @@ section:not(.church-collapsed) .church-toggle .day-chevron svg{transform:rotate(
         var typeOk=active==='all'||types.indexOf(active)>-1;
         var textOk=!q||((ev.getAttribute('data-text')||'')+' '+ev.textContent).toLowerCase().indexOf(q)>-1;
         var cityOk=city==='all'||ev.getAttribute('data-city')===city;
-        var show=typeOk&&textOk&&cityOk;
+        var show=typeOk&&textOk&&cityOk&&(!window.__favOnly||(window.__favSet&&window.__favSet.has(ev.getAttribute('data-favid'))));
         ev.classList.toggle('hidden',!show);
         if(show) visible++;
       });
       if(emptyEl) emptyEl.style.display=visible?'none':'block';
     }
     run(mainEvents,emptyMain); run(churchEvents,emptyChurch);
-    if(window.__churchAuto){ var _fq=(search.value||'').trim()!==''||active!=='all'||citySel.value!=='all'; window.__churchAuto(_fq, churchEvents.filter(function(ev){ return !ev.classList.contains('hidden'); }).length, churchEvents.length); }
-    var filtering=q!==''||active!=='all'||city!=='all';
+    if(window.__churchAuto){ var _fq=(search.value||'').trim()!==''||active!=='all'||citySel.value!=='all'||!!window.__favOnly; window.__churchAuto(_fq, churchEvents.filter(function(ev){ return !ev.classList.contains('hidden'); }).length, churchEvents.length); }
+    var filtering=q!==''||active!=='all'||city!=='all'||!!window.__favOnly;
     // When a search/filter session ends, restore the collapsed default:
     // only the soonest upcoming day open, the rest tucked back up.
     if(prevFiltering&&!filtering){
@@ -2229,5 +2237,67 @@ section:not(.church-collapsed) .church-toggle .day-chevron svg{transform:rotate(
   });
 })();
 </script>
+
+  <script>
+  (function () {
+    // Favorites (Dan, 2026-11-15): tap the heart on any event to save it.
+    // Hearts live bottom-left on the photo; a saved heart turns red and pops
+    // a "Favorite" tag. The Favorites button in the controls filters the
+    // page to just the saved events. Saved in this browser (localStorage).
+    var KEY = 'favs:holiday';
+    var favs = new Set();
+    try { (JSON.parse(localStorage.getItem(KEY) || '[]')).forEach(function (x) { favs.add(x); }); } catch (e) {}
+    window.__favSet = favs;
+    window.__favOnly = false;
+    var HEART = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21.2l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>';
+    function slug(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''); }
+    function save() { try { localStorage.setItem(KEY, JSON.stringify(Array.from(favs))); } catch (e) {} }
+    function refresh() { var s = document.getElementById('search'); if (s) s.dispatchEvent(new Event('input', { bubbles: true })); }
+    document.querySelectorAll('.event').forEach(function (ev) {
+      var title = (ev.querySelector('h3') || {}).textContent || '';
+      var date = ev.getAttribute('data-cal-start') || ev.getAttribute('data-day') || ev.getAttribute('data-end') || '';
+      var id = slug(title.trim()) + '|' + date.slice(0, 10);
+      ev.setAttribute('data-favid', id);
+      var photo = ev.querySelector('.event-photo');
+      if (!photo) return;
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'fav-btn' + (favs.has(id) ? ' is-fav' : '');
+      b.setAttribute('aria-label', 'Save this event to favorites');
+      b.setAttribute('aria-pressed', favs.has(id) ? 'true' : 'false');
+      b.innerHTML = HEART;
+      b.addEventListener('click', function (e) {
+        e.preventDefault(); e.stopPropagation();
+        if (favs.has(id)) { favs.delete(id); b.classList.remove('is-fav'); b.setAttribute('aria-pressed', 'false'); }
+        else { favs.add(id); b.classList.add('is-fav'); b.setAttribute('aria-pressed', 'true'); }
+        save(); paintCount();
+        if (window.__favOnly) refresh();
+      });
+      photo.appendChild(b);
+    });
+    var controls = document.querySelector('.controls');
+    if (!controls) return;
+    var viewBtn = document.createElement('button');
+    viewBtn.type = 'button';
+    viewBtn.className = 'fav-view-btn';
+    viewBtn.innerHTML = HEART + '<span>Favorites</span><span class="fav-count"></span>';
+    var emptyEl = document.getElementById('emptyMain') || document.getElementById('empty');
+    var defaultEmpty = emptyEl ? emptyEl.textContent : '';
+    function paintCount() {
+      var c = viewBtn.querySelector('.fav-count');
+      if (c) c.textContent = favs.size ? ' (' + favs.size + ')' : '';
+    }
+    viewBtn.addEventListener('click', function () {
+      window.__favOnly = !window.__favOnly;
+      viewBtn.classList.toggle('is-on', window.__favOnly);
+      viewBtn.querySelector('span').textContent = window.__favOnly ? 'Show all events' : 'Favorites';
+      if (emptyEl) emptyEl.textContent = (window.__favOnly && !favs.size) ? 'No favorites yet — tap the heart on any event to save it here.' : defaultEmpty;
+      refresh();
+    });
+    controls.appendChild(viewBtn);
+    paintCount();
+  })();
+  </script>
+
 </body>
 </html>

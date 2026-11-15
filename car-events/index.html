@@ -112,6 +112,15 @@
     .day-body { display: grid; gap: 12px; padding-top: 12px; }
     .day-group.collapsed .day-body { display: none; }
     .day-more-btn { min-height: 46px; padding: 10px 16px; background: #1d4ed8; color: #fff; border: none; border-radius: 10px; font: inherit; font-weight: 700; cursor: pointer; }
+    .event-photo { position: relative; }
+    .fav-btn{position:absolute;left:10px;bottom:10px;z-index:6;width:40px;height:40px;border-radius:999px;border:1px solid rgba(0,0,0,.18);background:rgba(255,255,255,.94);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+    .fav-btn svg{width:22px;height:22px;fill:none;stroke:#57534e;stroke-width:2;stroke-linejoin:round}
+    .fav-btn.is-fav svg{fill:#e0245e;stroke:#e0245e}
+    .fav-btn.is-fav::after{content:'Favorite';position:absolute;left:47px;top:50%;transform:translateY(-50%);background:#e0245e;color:#fff;font-size:.72rem;font-weight:700;letter-spacing:.02em;padding:3px 9px;border-radius:999px;white-space:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+    .fav-view-btn{display:inline-flex;align-items:center;gap:8px;min-height:46px;padding:0 18px;border-radius:999px;border:1px solid rgba(127,127,127,.55);background:transparent;color:inherit;font:inherit;font-weight:700;cursor:pointer}
+    .fav-view-btn svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:2;stroke-linejoin:round}
+    .fav-view-btn.is-on{background:#e0245e;border-color:#e0245e;color:#fff}
+    .fav-view-btn.is-on svg{fill:#fff;stroke:#fff}
     .event-list { display: grid; gap: 12px; }
     .event {
       display: flex;
@@ -360,7 +369,7 @@
         <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Event details checked daily</span>
         <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2"/></svg>Middle Tennessee</span>
       </div>
-      <p class="last-updated">Last updated: Sunday, November 15, 2026 · 7:51 AM CT</p>
+      <p class="last-updated">Last updated: Sunday, November 15, 2026 · 7:56 AM CT</p>
       <p class="submit-note" id="submitNote" role="button" tabindex="0">Know of a car event we missed? <strong>Tap here</strong> — or use the chat bubble in the bottom-right corner — and send us the details. We'll add it after a quick check.</p>
     </div>
   </header>
@@ -1032,7 +1041,7 @@
           var text = ((event.getAttribute('data-text') || '') + ' ' + event.textContent).toLowerCase();
           var matchesType = active === 'all' || type.split(' ').indexOf(active) !== -1;
           var matchesSearch = !q || text.indexOf(q) !== -1;
-          var visible = matchesType && matchesSearch;
+          var visible = matchesType && matchesSearch && (!window.__favOnly || (window.__favSet && window.__favSet.has(event.getAttribute('data-favid'))));
           event.classList.toggle('hidden', !visible);
           if (visible) shown += 1;
         });
@@ -1042,9 +1051,9 @@
             if (!ev.classList.contains('hidden')) anyVisible = true;
           });
           group.style.display = anyVisible ? '' : 'none';
-          if (anyVisible && (q || active !== 'all')) setMonth(group, true);
+          if (anyVisible && (q || active !== 'all' || window.__favOnly)) setMonth(group, true);
         });
-        window.__carFiltering = !!(q || active !== 'all');
+        window.__carFiltering = !!(q || active !== 'all' || window.__favOnly);
         if (window.carDayGroups) {
           window.carDayGroups.forEach(function (g) {
             var anyV = false;
@@ -1052,7 +1061,7 @@
               if (!ev.classList.contains('hidden')) anyV = true;
             });
             g.section.style.display = anyV ? '' : 'none';
-            if (anyV && (q || active !== 'all')) window.setDay(g, true);
+            if (anyV && (q || active !== 'all' || window.__favOnly)) window.setDay(g, true);
             else if (anyV && g.day === todayInChicago()) { g.preview = (g.section.querySelectorAll('.event').length > 4); window.setDay(g, true); }
           });
         }
@@ -1268,6 +1277,68 @@
       });
       sections.forEach(function (s) { body.appendChild(s); });
     });
+  })();
+  </script>
+
+
+  <script>
+  (function () {
+    // Favorites (Dan, 2026-11-15): tap the heart on any event to save it.
+    // Hearts live bottom-left on the photo; a saved heart turns red and pops
+    // a "Favorite" tag. The Favorites button in the controls filters the
+    // page to just the saved events. Saved in this browser (localStorage).
+    var KEY = 'favs:car';
+    var favs = new Set();
+    try { (JSON.parse(localStorage.getItem(KEY) || '[]')).forEach(function (x) { favs.add(x); }); } catch (e) {}
+    window.__favSet = favs;
+    window.__favOnly = false;
+    var HEART = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21.2l7.8-7.8 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>';
+    function slug(s) { return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''); }
+    function save() { try { localStorage.setItem(KEY, JSON.stringify(Array.from(favs))); } catch (e) {} }
+    function refresh() { var s = document.getElementById('search'); if (s) s.dispatchEvent(new Event('input', { bubbles: true })); }
+    document.querySelectorAll('.event').forEach(function (ev) {
+      var title = (ev.querySelector('h3') || {}).textContent || '';
+      var date = ev.getAttribute('data-cal-start') || ev.getAttribute('data-day') || ev.getAttribute('data-end') || '';
+      var id = slug(title.trim()) + '|' + date.slice(0, 10);
+      ev.setAttribute('data-favid', id);
+      var photo = ev.querySelector('.event-photo');
+      if (!photo) return;
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'fav-btn' + (favs.has(id) ? ' is-fav' : '');
+      b.setAttribute('aria-label', 'Save this event to favorites');
+      b.setAttribute('aria-pressed', favs.has(id) ? 'true' : 'false');
+      b.innerHTML = HEART;
+      b.addEventListener('click', function (e) {
+        e.preventDefault(); e.stopPropagation();
+        if (favs.has(id)) { favs.delete(id); b.classList.remove('is-fav'); b.setAttribute('aria-pressed', 'false'); }
+        else { favs.add(id); b.classList.add('is-fav'); b.setAttribute('aria-pressed', 'true'); }
+        save(); paintCount();
+        if (window.__favOnly) refresh();
+      });
+      photo.appendChild(b);
+    });
+    var controls = document.querySelector('.controls');
+    if (!controls) return;
+    var viewBtn = document.createElement('button');
+    viewBtn.type = 'button';
+    viewBtn.className = 'fav-view-btn';
+    viewBtn.innerHTML = HEART + '<span>Favorites</span><span class="fav-count"></span>';
+    var emptyEl = document.getElementById('emptyMain') || document.getElementById('empty');
+    var defaultEmpty = emptyEl ? emptyEl.textContent : '';
+    function paintCount() {
+      var c = viewBtn.querySelector('.fav-count');
+      if (c) c.textContent = favs.size ? ' (' + favs.size + ')' : '';
+    }
+    viewBtn.addEventListener('click', function () {
+      window.__favOnly = !window.__favOnly;
+      viewBtn.classList.toggle('is-on', window.__favOnly);
+      viewBtn.querySelector('span').textContent = window.__favOnly ? 'Show all events' : 'Favorites';
+      if (emptyEl) emptyEl.textContent = (window.__favOnly && !favs.size) ? 'No favorites yet — tap the heart on any event to save it here.' : defaultEmpty;
+      refresh();
+    });
+    controls.appendChild(viewBtn);
+    paintCount();
   })();
   </script>
 
