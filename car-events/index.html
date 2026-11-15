@@ -369,7 +369,7 @@
         <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Event details checked daily</span>
         <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2"/></svg>Middle Tennessee</span>
       </div>
-      <p class="last-updated">Last updated: Sunday, November 15, 2026 · 8:50 AM CT</p>
+      <p class="last-updated">Last updated: Sunday, November 15, 2026 · 8:53 AM CT</p>
       <p class="submit-note" id="submitNote" role="button" tabindex="0">Know of a car event we missed? <strong>Tap here</strong> — or use the chat bubble in the bottom-right corner — and send us the details. We'll add it after a quick check.</p>
     </div>
   </header>
@@ -1206,12 +1206,24 @@
   </script>
 
 
+  
+
+
+  <style>
+    .fav-bar{position:fixed;left:0;right:0;bottom:0;z-index:85;height:calc(50px + env(safe-area-inset-bottom));padding-bottom:env(safe-area-inset-bottom);background:#16181d;color:#fff;border:none;border-top:1px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;gap:9px;font:inherit;font-weight:700;font-size:.98rem;cursor:pointer;width:100%}
+    .fav-bar svg{width:19px;height:19px;fill:none;stroke:#fff;stroke-width:2;stroke-linejoin:round;flex:0 0 auto}
+    .fav-bar.is-on{background:#e0245e}
+    .fav-bar.is-on svg{fill:#fff}
+    body{padding-bottom:calc(58px + env(safe-area-inset-bottom))}
+    .chat-widget{bottom:calc(68px + env(safe-area-inset-bottom))}
+  </style>
   <script>
   (function () {
-    // Favorites (Dan, 2026-11-15): tap the heart on any event to save it.
-    // Hearts live bottom-left on the photo; a saved heart turns red and pops
-    // a "Favorite" tag. The Favorites button in the controls filters the
-    // page to just the saved events. Saved in this browser (localStorage).
+    // Favorites (Dan, 2026-11-15): tap the heart on any event to save it —
+    // the heart turns red and pops a "Favorite" tag. Saved events are one
+    // tap away from the slim Favorites bar fixed to the bottom of the
+    // screen (and the Favorites button in the controls): tapping either
+    // filters the page to just the saved events. Saved per-browser.
     var KEY = 'favs:car';
     var favs = new Set();
     try { (JSON.parse(localStorage.getItem(KEY) || '[]')).forEach(function (x) { favs.add(x); }); } catch (e) {}
@@ -1243,26 +1255,41 @@
       });
       photo.appendChild(b);
     });
-    var controls = document.querySelector('.controls');
-    if (!controls) return;
-    var viewBtn = document.createElement('button');
-    viewBtn.type = 'button';
-    viewBtn.className = 'fav-view-btn';
-    viewBtn.innerHTML = HEART + '<span>Favorites</span><span class="fav-count"></span>';
     var emptyEl = document.getElementById('emptyMain') || document.getElementById('empty');
     var defaultEmpty = emptyEl ? emptyEl.textContent : '';
-    function paintCount() {
-      var c = viewBtn.querySelector('.fav-count');
-      if (c) c.textContent = favs.size ? ' (' + favs.size + ')' : '';
+    var viewBtn = null;
+    var controls = document.querySelector('.controls');
+    if (controls) {
+      viewBtn = document.createElement('button');
+      viewBtn.type = 'button';
+      viewBtn.className = 'fav-view-btn';
+      viewBtn.innerHTML = HEART + '<span>Favorites</span><span class="fav-count"></span>';
+      viewBtn.addEventListener('click', function () { setFavOnly(!window.__favOnly); });
+      controls.appendChild(viewBtn);
     }
-    viewBtn.addEventListener('click', function () {
-      window.__favOnly = !window.__favOnly;
-      viewBtn.classList.toggle('is-on', window.__favOnly);
-      viewBtn.querySelector('span').textContent = window.__favOnly ? 'Show all events' : 'Favorites';
-      if (emptyEl) emptyEl.textContent = (window.__favOnly && !favs.size) ? 'No favorites yet — tap the heart on any event to save it here.' : defaultEmpty;
+    var bar = document.createElement('button');
+    bar.type = 'button';
+    bar.className = 'fav-bar';
+    bar.innerHTML = HEART + '<span class="fav-bar-label">Favorites</span><span class="fav-count"></span>';
+    bar.addEventListener('click', function () { setFavOnly(!window.__favOnly); });
+    document.body.appendChild(bar);
+    function paintCount() {
+      var txt = favs.size ? ' (' + favs.size + ')' : '';
+      if (viewBtn) viewBtn.querySelector('.fav-count').textContent = txt;
+      bar.querySelector('.fav-count').textContent = txt;
+    }
+    function setFavOnly(on) {
+      window.__favOnly = on;
+      if (viewBtn) {
+        viewBtn.classList.toggle('is-on', on);
+        viewBtn.querySelector('span').textContent = on ? 'Show all events' : 'Favorites';
+      }
+      bar.classList.toggle('is-on', on);
+      bar.querySelector('.fav-bar-label').textContent = on ? 'Showing favorites — tap to show all' : 'Favorites';
+      if (emptyEl) emptyEl.textContent = (on && !favs.size) ? 'No favorites yet — tap the heart on any event to save it here.' : defaultEmpty;
       refresh();
-    });
-    controls.appendChild(viewBtn);
+      if (on) window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     paintCount();
   })();
   </script>
