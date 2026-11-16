@@ -369,7 +369,7 @@
         <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Event details checked daily</span>
         <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2"/></svg>Middle Tennessee</span>
       </div>
-      <p class="last-updated">Last updated: Sunday, November 15, 2026 · 8:53 AM CT</p>
+      <p class="last-updated">Last updated: Sunday, November 15, 2026 · 6:29 PM CT</p>
       <p class="submit-note" id="submitNote" role="button" tabindex="0">Know of a car event we missed? <strong>Tap here</strong> — or use the chat bubble in the bottom-right corner — and send us the details. We'll add it after a quick check.</p>
     </div>
   </header>
@@ -1294,5 +1294,58 @@
   })();
   </script>
 
+
+<script>
+(function(){
+  // Ongoing events (Dan, 2026-11-15): same rule as the holiday page — if an
+  // event started before today but is still running, display today's date as
+  // the start of its date range instead of the past start date, so the date
+  // block never looks out of date. Runs on every page load, so it rolls
+  // forward daily on its own. Display only — calendar data keeps true dates.
+  function chicagoToday(){ try{ return new Intl.DateTimeFormat('en-CA',{timeZone:'America/Chicago',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()); }catch(e){ var d=new Date(),m=String(d.getMonth()+1),day=String(d.getDate()); if(m.length<2)m='0'+m; if(day.length<2)day='0'+day; return d.getFullYear()+'-'+m+'-'+day; } }
+  var MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var WD=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  function pd(v){ if(!v) return null; var p=v.slice(0,10).split('-'); return new Date(+p[0],+p[1]-1,+p[2]); }
+  function fmt(d){ return d.getFullYear()+'-'+('0'+(d.getMonth()+1)).slice(-2)+'-'+('0'+d.getDate()).slice(-2); }
+  var todayS=chicagoToday(), today=pd(todayS);
+  document.querySelectorAll('article.event').forEach(function(ev){
+    var endS=ev.getAttribute('data-end'); if(!endS) return;
+    var end=pd(endS); if(!end||end.getTime()<today.getTime()) return;
+    var box=ev.querySelector('.date'); if(!box) return;
+    var mEl=box.querySelector('.date-month'), dEl=box.querySelector('.date-day');
+    if(!mEl||!dEl) return;
+    var rm=dEl.textContent.trim().match(/^(\d{1,2})\s*[\u2013\u2014-]\s*(?:([A-Z][a-z]{2})\s+)?(\d{1,2})$/);
+    if(!rm) return;
+    var sm=MON.indexOf(mEl.textContent.trim().slice(0,3)); if(sm<0) return;
+    var sy=end.getFullYear(); if(sm>end.getMonth()) sy-=1;
+    var start=new Date(sy,sm,+rm[1]);
+    if(start.getTime()>=today.getTime()) return;
+    if(fmt(end)===todayS){
+      dEl.textContent=today.getDate();
+      mEl.textContent=MON[today.getMonth()]+' \u00b7 '+WD[today.getDay()];
+      box.classList.remove('range');
+    } else if(end.getMonth()===today.getMonth()){
+      dEl.textContent=today.getDate()+'\u2013'+end.getDate();
+      mEl.textContent=MON[today.getMonth()]+' \u00b7 '+WD[today.getDay()]+'\u2013'+WD[end.getDay()];
+    } else {
+      dEl.textContent=today.getDate()+'\u2013'+end.getDate();
+      mEl.textContent=MON[today.getMonth()]+'\u2013'+MON[end.getMonth()]+' \u00b7 '+WD[today.getDay()]+'\u2013'+WD[end.getDay()];
+    }
+  });
+  // By-venue rows: clamp a pure date range (no times) the same way.
+  document.querySelectorAll('.venue .v-date').forEach(function(el){
+    var rm=el.textContent.trim().match(/^([A-Z][a-z]{2})\s+(\d{1,2})\s*[\u2013\u2014-]\s*(?:([A-Z][a-z]{2})\s+)?(\d{1,2})$/);
+    if(!rm) return;
+    var sm=MON.indexOf(rm[1]); if(sm<0) return;
+    var em=rm[3]?MON.indexOf(rm[3]):sm; if(em<0) em=sm;
+    var start=new Date(today.getFullYear(),sm,+rm[2]);
+    var end=new Date(today.getFullYear()+(em<sm?1:0),em,+rm[4]);
+    if(end.getTime()<today.getTime()||start.getTime()>=today.getTime()) return;
+    if(fmt(end)===todayS) el.textContent=MON[today.getMonth()]+' '+today.getDate();
+    else if(em===today.getMonth()) el.textContent=MON[today.getMonth()]+' '+today.getDate()+'\u2013'+end.getDate();
+    else el.textContent=MON[today.getMonth()]+' '+today.getDate()+' \u2013 '+MON[em]+' '+end.getDate();
+  });
+})();
+</script>
 </body>
 </html>
