@@ -335,7 +335,7 @@ section:not(.church-collapsed) .church-toggle .day-chevron svg{transform:rotate(
       <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2"/></svg>Within ~50 miles of Franklin, TN</span>
       <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M7 3v4M17 3v4M3 10h18"/></svg>238 events + 23 church events</span>
     </div>
-    <p class="last-updated">Last updated: Sunday, November 15, 2026 · 4:34 PM CT</p>
+    <p class="last-updated">Last updated: Sunday, November 15, 2026 · 6:25 PM CT</p>
       <p class="submit-note" id="submitNote" role="button" tabindex="0">Know of a holiday event we missed? <strong>Tap here</strong> — or use the chat bubble in the bottom-right corner — and send us the details. We'll add it after a quick check.</p>
   </div>
 </header>
@@ -2145,6 +2145,13 @@ section:not(.church-collapsed) .church-toggle .day-chevron svg{transform:rotate(
       if(sd){
         var last=ed||sd;
         if(ev.getAttribute('data-cal-allday')==='1'&&ed){ last=new Date(ed.getTime()-86400000); if(last<sd) last=sd; }
+        // Ongoing events (Dan, 2026-11-15): if an event started before today but
+        // is still running, display today's date as the start of its date range
+        // instead of the past start date, so the rail never looks out of date.
+        // Display only — the calendar data keeps the true start date.
+        var clamped=false;
+        var td=parseD(todayChicago());
+        if(td&&sd.getTime()<td.getTime()&&last.getTime()>=td.getTime()){ sd=td; clamped=true; }
         var topLine='';
         if(badge){ var bsm=badge.querySelector('small'); if(bsm) topLine=bsm.textContent.trim(); }
         if(!topLine){
@@ -2152,6 +2159,8 @@ section:not(.church-collapsed) .church-toggle .day-chevron svg{transform:rotate(
           else if(last.getMonth()===sd.getMonth()) topLine=monShort[sd.getMonth()]+' · '+dayShort[sd.getDay()]+'–'+dayShort[last.getDay()];
           else topLine=monShort[sd.getMonth()]+' – '+monShort[last.getMonth()];
         }
+        if(clamped&&last.getTime()===sd.getTime()) topLine=monShort[sd.getMonth()]+' \u00b7 '+dayFull[sd.getDay()];
+        else if(clamped&&topLine) topLine=topLine.replace(/^(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\b/, monShort[sd.getMonth()]);
         var rail=document.createElement('span'); rail.className='date-badge';
         var rSmall=document.createElement('small'); rSmall.textContent=topLine; rail.appendChild(rSmall);
         var rDay=document.createElement('span'); rDay.className='badge-day';
