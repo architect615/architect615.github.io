@@ -369,7 +369,7 @@
         <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Event details checked daily</span>
         <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2"/></svg>Middle Tennessee</span>
       </div>
-      <p class="last-updated">Last updated: Monday, November 16, 2026 · 8:49 AM CT</p>
+      <p class="last-updated">Last updated: Monday, November 16, 2026 · 1:18 PM CT</p>
       <p class="submit-note" id="submitNote" role="button" tabindex="0">Know of a car event we missed? <strong>Tap here</strong> — or use the chat bubble in the bottom-right corner — and send us the details. We'll add it after a quick check.</p>
     </div>
   </header>
@@ -967,7 +967,7 @@
             });
             g.section.style.display = anyV ? '' : 'none';
             if (anyV && (q || active !== 'all' || window.__favOnly)) window.setDay(g, true);
-            else if (anyV && g.day === todayInChicago()) { g.preview = (g.section.querySelectorAll('.event').length > 4); window.setDay(g, true); }
+            else if (anyV && g.day === todayInChicago()) { g.preview = (g.section.querySelectorAll('.event').length > 2); window.setDay(g, true); }
           });
         }
         empty.style.display = shown ? 'none' : 'block';
@@ -1140,7 +1140,7 @@
       if (g.state) g.state.textContent = open ? 'Collapse' : 'Expand';
       var pv = open && g.preview && !window.__carFiltering;
       var evs = g.section.querySelectorAll('.day-body > .event');
-      Array.prototype.forEach.call(evs, function (ev, i) { if (i >= 4) ev.style.display = pv ? 'none' : ''; });
+      Array.prototype.forEach.call(evs, function (ev, i) { if (i >= 2) ev.style.display = pv ? 'none' : ''; });
       if (g.moreBtn) g.moreBtn.style.display = pv ? '' : 'none';
     }
     window.setDay = function (g, open) { g.open = open; paintDay(g, open); };
@@ -1171,8 +1171,8 @@
         var dayBody = section.querySelector('.day-body');
         byDay[d].forEach(function (ev) { dayBody.appendChild(ev); });
         var mb = null;
-        if (byDay[d].length > 4) { mb = document.createElement('button'); mb.type = 'button'; mb.className = 'day-more-btn'; mb.textContent = 'Show ' + (byDay[d].length - 4) + ' more events'; dayBody.appendChild(mb); }
-        var g = { day: d, section: section, toggle: section.querySelector('.day-toggle'), state: section.querySelector('.day-state'), open: d === today, moreBtn: mb, preview: (d === today && byDay[d].length > 4) };
+        if (byDay[d].length > 2) { mb = document.createElement('button'); mb.type = 'button'; mb.className = 'day-more-btn'; mb.textContent = 'Show ' + (byDay[d].length - 2) + ' more events'; dayBody.appendChild(mb); }
+        var g = { day: d, section: section, toggle: section.querySelector('.day-toggle'), state: section.querySelector('.day-state'), open: d === today, moreBtn: mb, preview: (d === today && byDay[d].length > 2) };
         paintDay(g, g.open);
         if (mb) mb.addEventListener('click', function () { g.preview = false; window.setDay(g, true); });
         g.toggle.addEventListener('click', function () { if (g.preview) { g.preview = false; window.setDay(g, true); return; } window.setDay(g, !g.open); });

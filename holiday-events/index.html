@@ -335,7 +335,7 @@ section:not(.church-collapsed) .church-toggle .day-chevron svg{transform:rotate(
       <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s7-4.5 7-11a7 7 0 1 0-14 0c0 6.5 7 11 7 11Z"/><circle cx="12" cy="10" r="2"/></svg>Within ~50 miles of Franklin, TN</span>
       <span><svg aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="1"/><path d="M7 3v4M17 3v4M3 10h18"/></svg>234 events + 22 church events</span>
     </div>
-    <p class="last-updated">Last updated: Monday, November 16, 2026 · 8:53 AM CT</p>
+    <p class="last-updated">Last updated: Monday, November 16, 2026 · 1:18 PM CT</p>
       <p class="submit-note" id="submitNote" role="button" tabindex="0">Know of a holiday event we missed? <strong>Tap here</strong> — or use the chat bubble in the bottom-right corner — and send us the details. We'll add it after a quick check.</p>
   </div>
 </header>
@@ -2002,7 +2002,7 @@ section:not(.church-collapsed) .church-toggle .day-chevron svg{transform:rotate(
     g.toggle.setAttribute('aria-expanded',open?'true':'false');
     g.body.inert=!open;
     var pv=open&&g.preview&&!(typeof prevFiltering!=='undefined'&&prevFiltering);
-    g.events.forEach(function(ev,i){ if(i>=4) ev.style.display=pv?'none':''; });
+    g.events.forEach(function(ev,i){ if(i>=2) ev.style.display=pv?'none':''; });
     if(g.moreBtn) g.moreBtn.style.display=pv?'':'none';
   }
   (function groupDays(){
@@ -2040,11 +2040,11 @@ section:not(.church-collapsed) .church-toggle .day-chevron svg{transform:rotate(
       var cards=document.createElement('div'); cards.className='day-cards';
       byDay[d].forEach(function(ev){ cards.appendChild(ev); });
       var mb=null;
-      if(byDay[d].length>4){ mb=document.createElement('button'); mb.type='button'; mb.className='day-more-btn'; mb.textContent='Show '+(byDay[d].length-4)+' more events'; mb.addEventListener('click',function(){ var gg=dayGroups[d]; if(gg){ gg.preview=false; gg.open=true; apply(); } }); cards.appendChild(mb); }
+      if(byDay[d].length>2){ mb=document.createElement('button'); mb.type='button'; mb.className='day-more-btn'; mb.textContent='Show '+(byDay[d].length-2)+' more events'; mb.addEventListener('click',function(){ var gg=dayGroups[d]; if(gg){ gg.preview=false; gg.open=true; apply(); } }); cards.appendChild(mb); }
       inner.appendChild(cards); body.appendChild(inner);
       section.appendChild(h); section.appendChild(body);
       frag.appendChild(section);
-      var g={day:d,section:section,head:h,body:body,toggle:btn,count:btn.querySelector('.day-count'),events:byDay[d],open:false,moreBtn:mb,preview:(d===today&&byDay[d].length>4)};
+      var g={day:d,section:section,head:h,body:body,toggle:btn,count:btn.querySelector('.day-count'),events:byDay[d],open:false,moreBtn:mb,preview:(d===today&&byDay[d].length>2)};
       dayGroups[d]=g;
       btn.addEventListener('click',function(){ if(g.preview){ g.preview=false; g.open=true; apply(); return; } g.open=!g.open; apply(); });
     });
@@ -2195,7 +2195,7 @@ section:not(.church-collapsed) .church-toggle .day-chevron svg{transform:rotate(
     // When a search/filter session ends, restore the collapsed default:
     // only the soonest upcoming day open, the rest tucked back up.
     if(prevFiltering&&!filtering){
-      dayOrder.forEach(function(d,i){ var gg=dayGroups[d]; gg.open=(i===0); var td=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Chicago',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()); gg.preview=(d===td&&gg.events.length>4); });
+      dayOrder.forEach(function(d,i){ var gg=dayGroups[d]; gg.open=(i===0); var td=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Chicago',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date()); gg.preview=(d===td&&gg.events.length>2); });
     }
     prevFiltering=filtering;
     dayOrder.forEach(function(d){
